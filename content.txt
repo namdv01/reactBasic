@@ -1,0 +1,189 @@
+react làm được gì?
+-đây là 1 framework 
+muốn viết 1 SPA bắt buộc phải dùng 1 framework frontend
+-điểm mạnh của react với vue,angular
+do react dùng js còn angular dùng typescript còn vue thì người TQ dùng là chính
+vue đơn giản hơn angular
+-react 1 mình đi 1 đường đủ nguồn lực đi 1 mình
+-react khác vue,angular ở chỗ là ko dùng html mà dùng js thuần
+
+
+                                        CÁC KHÁI NIỆM
+sử dụng class thay vì hook và redux thay vì contentAPI
+class hay hook là các function component nhưng hook là đệ tử class
+redux có giá trị hơn contentAPI
+
+                                        BẮT ĐẦU VỚI REACT
+nodejs là môi trường để chạy react (cần vì react là file js chạy trên nodejs)
+với lần chạy đầu tiên với npm start phải chờ 1 lúc để khởi tạo các biến môi trường,các lần sau sẽ nhanh hơn 
+từ lần sau sẽ chạy là npm run build chứ ko cần npm start nữa
+
+
+                                        CẤU TRÚC PROJECT REACT
+Trình tự chạy các file trong react:
+1.chạy file index.html
+2.chạy index.js
+3.chạy app.js
+Lý do khi chạy npm start thì sử dụng react-scripts bản chất bên trong nó là webpack 
+webpack chạy ngầm tất cả file js,scss vào tống vào file html nên mặc định các file js được chạy trong html
+
+Việc cấu hình thư mục như thế nào là tùy nhưng có 1 gợi ý là nên để những thứ cùng chức năng vào cùng 1 folder
+1.assets là nơi lưu file local và muốn public nó đi vd như img,audio,css,js đây là có thể public ra ngoài
+2.components là nơi lưu trữ các hàm có thể tái sử dụng(component được hiểu là các hàm có thể sử dụng lại)
+3.routes nơi định nghĩa các route cho frontend
+4.store nơi viết redux
+5.styles nơi viết scss,khai báo các biến màu sắc
+6.utils nơi lưu các function dùng chung
+7.views nơi viết các trang page
+8.services nơi gọi các api
+
+
+-component:mục đích là tái sử dụng code và để frontend có trải nghiệm mượt hơn,
+mục đích sử dụng component là để viết code độc lập nên khi 1 component thay đổi sẽ ko ảnh hưởng đến component khác
+-component giống như các viên gạch lắp rắp ra 1 ngôi nhà là 1 trang web 
+    mỗi thành phần từ dòng text,hình ảnh,... đều là component
+-Có function component,class component,arrow function component 
+    thì bản chất đều trả về (return) 1 khối html ngay bên trong js mà không phải 1 giá trị nào 
+    (Cú pháp như vậy được gọi là jsx)
+    Lý do cần có class component và function component:
+    +function component chỉ trả về giá trị còn class component có thể xử lí logic bên trong nó
+    (thường sử dụng class hơn)
+    +Với function component thì điều quan tâm luôn là giá trị return còn
+     Với class component thì việc show như function thì bắt buộc phải dùng hàm render()
+
+    +Khi khai báo class component thì cần cho nó kế thừa React.component để
+            những thuộc tính,phương thức đã tồn tại như render() đc class của mình kế thừa
+
+    muốn sử dụng class component ở chỗ khác thì cần khai báo và bản thân class đó phải export
+    cách sử dụng thì coi class đó là 1 thẻ html và 
+    với class thì cần viết hoa chữ cái đầu lúc đặt tên file và đặt tên biến lúc import     
+    ví dự khi gọi class component:
+    1.sử dụng bình thường (ưu điểm bên trong có thể sử dụng con) <Mycomponent><Mycomponent>
+    2.sử dụng viết tắt (ưu điểm ngắn nhưng ko thể để con bên trong) <Mycomponent/>   
+
+-Nguyên tắc return của jsx là trả về 1 block
+1 block là chỉ có 1 thẻ bọc chứ ko đc có 2 hay nhiều hơn
+nhưng có 2 cách thường dùng là dùng 1 thẻ <div> hoặc <> để bọc hoặc các phiên bản cũ <React.Fragment>
+ko sử dụng class mà là className     
+
+
+State:Dữ liệu thay đổi ngay trên giao diện.Đây là chức năng cập nhật realtime
+-state tương đương bộ nhớ của frontend
+(Khác so với backend là phải gửi req và đợi dữ liệu trả về rồi ms load ra frontend)
+khai báo state là 1 đối tượng trong class component và sử dụng thì dùng this. this ám chỉ đây là của class
+Bắt buộc phải có this
+
+state được coi như trạng thái của các component
+Với state thì việc thay đổi thì cần sử dụng tới this.setState({}) đã được định nghĩa sẵn 
+chứ ko thể dùng phép gán
+Các giá trị cũ ko cần thay đổi thì ko cần gọi tới và sẽ được react giữ nguyên
+(Lý do khi thay đổi state thì lập tức giao diện thay đổi là do hàm setState tự động gọi lại hàm render)
+(Đây cũng là lý do khiến ko cần tải lại trang mà các đối tượng vẫn đc cập nhật)
+
+
+DOM Event:các sự kiện xảy ra trên web 
+khi gọi các hàm thực thi khi onEvent thì ko cần dấu () mà chỉ cần gọi tới vd: this.clickMe
+điều kiện tiên quyết khi viết các hàm trong class là phải dùng arrow function
+
+
+Tìm hiểu Form trong react 
+Quá trình diễn ra :
+1.đầu tiên khi click nút submit thì cần preventDefault để ngăn sự kiện submit cho phía backend
+2.Các biến state sẽ luôn đc cập nhật và khi submit thì cũng vậy
+3.Các state tại thời điểm submit sẽ được truyền lên api để trả về dữ liệu
+
+
+Khái niệm nesting component :bọc các component hay component cha,component con
+tạo component con sau đó import vào component cha vào trong phần return gọi tới là xong
+mục đích xây dựng component cha con là để truyền dữ liệu từ cha xuống con(ngược lại ko đc)
+Việc truyền dữ liệu từ cha xuống con sẽ được thực hiện khi cha gọi con và kèm theo dữ liệu là 1 attribute
+dữ liệu cha truyền xuống con được lưu ở this.props cũng như this.state là trả về dữ liệu của component đó
+
+
+
+khái niệm stateless(function) và statefull(class) ?
+với function thì ko kiểm soát state
+ưu  tiên dùng class còn với function thì khi học hook mới có tác dụng khác biệt
+
+
+xét điều kiện để render JSX:
+nên sử dụng toán tử 3 ngôi
+
+Chia cắt component thành các thành phần độc lập:
+cần chia cắt component để có thể tái sử dụng những chỗ tương tự
+
+
+function as props : 1 hàm được coi như là 1 props
+
+
+[...childList,job]: được hiểu là 
+1.tạo 1 cái mảng 
+2. ...childList copy mảng childList từ trước bằng dấu ...
+3.job : thêm vào sau 
+(nếu muốn thêm vào trước thì dùng [job,...childList])
+
+Xóa,Thêm các phần tử của component con mà update lên cha thì:
+1.tạo 1 hàm xử lí ở cha 
+2. truyền xuống props cho con ,khi con gọi thì cha sẽ đc cập nhật
+
+
+
+Lý do react cập nhật real time bởi có 1 cây vitural DOM bên dưới DOM 
+cây vitural DOM này sẽ chỉ cập nhật những thứ thay đổi chứ ko cập nhật toàn bộ như DOM
+
+Nhúng scss,css
+
+
+Xây dựng todoList(CRUD)
+
+Sử dụng react-router:điều hướng trang web mà không cần load lại trang
+sử dụng routes thay switch cũ và ko cần exact nữa
+điểm yếu của route là vẫn cần load lại trang thì ta cần sử dụng link và navlink
+
+
+Vòng đời của component có 3 loại:
+1.mounting:tên gọi cho lần render đầu tiên,
+khi mounting thì nó thực hiện lần lượt 3 Việc
+1.1: componentWillMount
+1.2: render 
+1.3: componentDidMount :thường là nơi sử dụng để gọi các api,cũng thường là nơi setTimeout,setInterval
+2.updating : những lần sau render thì sẽ được gọi là updating thay vì mounting
+do nó có 5 cơ chế 
+3.unmounting :khi component bị removed khởi DOM
+bên trong unmounting chỉ có duy nhất phương thức componentWillUnMount sẽ được gọi trước khi component bị xóa
+3.1
+
+
+Khái niệm higher order component: được hiểu là 1 component được buff những thuộc tính,phương thức mới từ thằng khác
+
+switch tags ???
+sử dụng thẻ switch để bọc các route là vì nếu ko bọc sẽ ảnh hưởng đến điều hướng do cứ đúng là add 
+VD: /user == /:id 
+
+import images in react:thêm 1 import như thêm thư viện,ko sử dụng đường dẫn trong src do react đã cấu hình để ko lộ thông tin 
+
+
+                                                    REDUX
+bình thường tất cả component đều có 1 cha lớn nhất là React root 
+muốn 2 component A,B trao đổi vs nhau thì phải đi vòng lên component cha rồi ms xuống đc bên B 
+thay vì vậy sinh ra redux : giống như sư phụ 
+sư phụ kết nối các component khác nhau và khi có 1 component thay đổi thì toàn bộ các component trong nhóm redux đó đều thay đổi theo 
+VD: đổi ngôn ngữ thì tất cả component phải đổi khi component chuyển đổi ngôn ngữ thay đổi
+
+-so sánh redux vs contextApi và localstorage :
+redux > contextApi vì redux cho phép có render thay đổi hay ko còn contextApi thì luôn render 
+redux > localstorage vì redux có thể kéo đc nhiều component còn localstorage chỉ kéo đc 1
+
+
+-các khái niệm bên trong redux:
+store ,action,reducer:
+
+action: là sự kiện mà react gửi cho redux để cho redux biết có sự kiện thay đổi 
+store: nơi lưu trữ dữ liệu tại redux,nơi state của redux đc lưu trữ 
+reducer: các khối thực thi hành động cho redux 
+
+
+mapping state(redux) to props(react)
+
+
+
